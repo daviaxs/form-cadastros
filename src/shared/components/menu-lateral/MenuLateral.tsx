@@ -3,7 +3,7 @@ import { Box } from '@mui/system'
 import ProfileAvatar from '../../assets/avatarImage.png'
 import Divider from "@mui/material/Divider"
 import Avatar from '@mui/material/Avatar'
-import { useDrawerContext } from "../../contexts";
+import { useAppThemeContext, useDrawerContext } from "../../contexts";
 import { useMatch, useNavigate, useResolvedPath } from "react-router-dom";
 
 interface IListItemLinkProps {
@@ -41,6 +41,7 @@ interface IMenuLateralProps {
 export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
   const theme = useTheme()
   const smDown = useMediaQuery(theme.breakpoints.down('sm'))
+  const { toggleTheme, themeName } = useAppThemeContext()
 
   const { isDrawerOpen, toggleDrawerOpen, drawerOptions } = useDrawerContext()
 
@@ -61,13 +62,24 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
           <Box flex={1}>
             <List component='nav'>
               {drawerOptions.map(drawerOptions => (
-                  <ListItemLink
-                    key={drawerOptions.path}
-                    icon={drawerOptions.icon}
-                    label={drawerOptions.label}
-                    to={drawerOptions.path}
-                    onClick={smDown ? toggleDrawerOpen : undefined} />
+                <ListItemLink
+                  key={drawerOptions.path}
+                  icon={drawerOptions.icon}
+                  label={drawerOptions.label}
+                  to={drawerOptions.path}
+                  onClick={smDown ? toggleDrawerOpen : undefined} />
               ))}
+            </List>
+          </Box>
+
+          <Box>
+            <List component='nav'>
+              <ListItemButton onClick={ toggleTheme }>
+                <ListItemIcon>
+                  <Icon>{themeName === 'light' ? 'light_mode' : 'dark_mode'}</Icon>
+                </ListItemIcon>
+                <ListItemText primary="Alternar tema" />
+              </ListItemButton>
             </List>
           </Box>
 
@@ -75,7 +87,7 @@ export const MenuLateral: React.FC<IMenuLateralProps> = ({ children }) => {
       </Drawer>
 
       <Box height="100vh" marginLeft={smDown ? 0 : theme.spacing(28)} >
-          {children}
+        {children}
       </Box>
     </>
   )
