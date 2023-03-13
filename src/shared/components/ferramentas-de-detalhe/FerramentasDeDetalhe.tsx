@@ -83,7 +83,7 @@ export const FerramentasDeDetalhe: React.FC<IFerramentasDeDetalheProps> = ({
         variant="outlined"
         startIcon={<Icon>save</Icon>}>
         <Typography variant="button" whiteSpace='nowrap' textOverflow='ellipsis' overflow='hidden'>
-          Salvar e Voltar
+          Salvar e fechar
         </Typography>
       </Button>)}
 
