@@ -1,8 +1,10 @@
 {
   "pessoas": [
     {
-      "id": "1",
-      "nome": "Davi Alves"
+      "id": 1,
+      "email": "davi@gmail.com",
+      "cidadeId": 1,
+      "nomeCompleto": "Davi Alves"
     }
   ]
 }
