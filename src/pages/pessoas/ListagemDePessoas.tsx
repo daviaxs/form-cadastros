@@ -1,10 +1,11 @@
 import { useEffect, useMemo, useState } from "react"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
 import { useSearchParams } from "react-router-dom"
 
-import { FerramentasDaListagem } from "../../shared/components"
-import { useDebounce } from "../../shared/hooks"
-import { LayoutBaseDePagina } from "../../shared/layouts"
 import { IListagemPessoa, PessoasService } from "../../shared/services/api/pessoas/PessoasService"
+import { FerramentasDaListagem } from "../../shared/components"
+import { LayoutBaseDePagina } from "../../shared/layouts"
+import { useDebounce } from "../../shared/hooks"
 
 
 
@@ -37,7 +38,7 @@ export const ListagemDePessoas: React.FC = () => {
             setTotalCount(result.totalCount)
             setRows(result.data)
           }
-          
+
         })
     })
   }, [busca, debounce])
@@ -51,6 +52,31 @@ export const ListagemDePessoas: React.FC = () => {
         textoDaBusca={busca}
         aoMudarTextoDeBusca={texto => setSearchParams({ busca: texto }, { replace: true })}
       />}>
+
+      <TableContainer component={Paper} variant={"outlined"} sx={{ m: 1, width: "auto" }}>
+        <Table>
+          <TableHead>
+
+            <TableRow>
+              <TableCell>Ações</TableCell>
+              <TableCell>Nome completo</TableCell>
+              <TableCell>Email</TableCell>
+            </TableRow>
+
+          </TableHead>
+          <TableBody>
+
+            {rows.map(row => (
+              <TableRow key={row.id}>
+              <TableCell>Ações</TableCell>
+              <TableCell>{row.nomeCompleto}</TableCell>
+              <TableCell>{row.email}</TableCell>
+            </TableRow>
+            ))}
+
+          </TableBody>
+        </Table>
+      </TableContainer>
 
     </LayoutBaseDePagina>
   )
