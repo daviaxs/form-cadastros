@@ -1,12 +1,24 @@
 import { useEffect, useMemo, useState } from "react"
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, LinearProgress, Typography } from "@mui/material"
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  TableFooter,
+  LinearProgress,
+  Typography,
+  Pagination
+} from "@mui/material"
 import { useSearchParams } from "react-router-dom"
 
 import { IListagemPessoa, PessoasService } from "../../shared/services/api/pessoas/PessoasService"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
-import { useDebounce } from "../../shared/hooks"
 import { Environments } from "../../shared/environments"
+import { useDebounce } from "../../shared/hooks"
 
 
 
@@ -22,12 +34,16 @@ export const ListagemDePessoas: React.FC = () => {
     return searchParams.get('busca') || ''
   }, [searchParams])
 
+  const pagina = useMemo(() => {
+    return Number(searchParams.get('pagina') || '1')
+  }, [searchParams])
+
 
   useEffect(() => {
     setIsLoading(true)
 
     debounce(() => {
-      PessoasService.getAll(1, busca)
+      PessoasService.getAll(pagina, busca)
         .then((result) => {
           setIsLoading(false)
 
@@ -42,7 +58,7 @@ export const ListagemDePessoas: React.FC = () => {
 
         })
     })
-  }, [busca, debounce])
+  }, [busca, debounce, pagina])
 
   return (
     <LayoutBaseDePagina
@@ -51,7 +67,7 @@ export const ListagemDePessoas: React.FC = () => {
         mostrarInputBusca
         textoBotaoNovo="Nova"
         textoDaBusca={busca}
-        aoMudarTextoDeBusca={texto => setSearchParams({ busca: texto }, { replace: true })}
+        aoMudarTextoDeBusca={texto => setSearchParams({ busca: texto, pagina: '1' }, { replace: true })}
       />}>
 
       <TableContainer component={Paper} variant={"outlined"} sx={{ m: 1, width: "auto" }}>
@@ -88,6 +104,17 @@ export const ListagemDePessoas: React.FC = () => {
               <TableRow>
                 <TableCell colSpan={3}>
                   <LinearProgress variant="indeterminate" />
+                </TableCell>
+              </TableRow>
+            )}
+            {(totalCount > 0 && totalCount > Environments.LIMITE_DE_LINHAS) && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <Pagination
+                    page={pagina}
+                    count={Math.ceil(totalCount / Environments.LIMITE_DE_LINHAS)}
+                    onChange={(_, newPage) => setSearchParams({ busca, pagina: newPage.toString() }, { replace: true })}
+                  />
                 </TableCell>
               </TableRow>
             )}
