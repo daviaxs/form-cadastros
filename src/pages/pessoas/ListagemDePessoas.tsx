@@ -1,11 +1,12 @@
 import { useEffect, useMemo, useState } from "react"
-import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material"
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, TableFooter, LinearProgress, Typography } from "@mui/material"
 import { useSearchParams } from "react-router-dom"
 
 import { IListagemPessoa, PessoasService } from "../../shared/services/api/pessoas/PessoasService"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 import { useDebounce } from "../../shared/hooks"
+import { Environments } from "../../shared/environments"
 
 
 
@@ -28,7 +29,7 @@ export const ListagemDePessoas: React.FC = () => {
     debounce(() => {
       PessoasService.getAll(1, busca)
         .then((result) => {
-          setIsLoading(true)
+          setIsLoading(false)
 
           if (result instanceof Error) {
             alert(result.message)
@@ -55,26 +56,43 @@ export const ListagemDePessoas: React.FC = () => {
 
       <TableContainer component={Paper} variant={"outlined"} sx={{ m: 1, width: "auto" }}>
         <Table>
-          <TableHead>
 
+          <TableHead>
             <TableRow>
               <TableCell>Ações</TableCell>
               <TableCell>Nome completo</TableCell>
               <TableCell>Email</TableCell>
             </TableRow>
-
           </TableHead>
-          <TableBody>
 
+          <TableBody>
             {rows.map(row => (
               <TableRow key={row.id}>
-              <TableCell>Ações</TableCell>
-              <TableCell>{row.nomeCompleto}</TableCell>
-              <TableCell>{row.email}</TableCell>
-            </TableRow>
+                <TableCell>Ações</TableCell>
+                <TableCell>{row.nomeCompleto}</TableCell>
+                <TableCell>{row.email}</TableCell>
+              </TableRow>
             ))}
-
           </TableBody>
+
+          {totalCount === 0 && !isLoading && (
+            <section>
+              <Typography sx={{ m: 1 }} color="GrayText">
+                {Environments.LISTAGEM_VAZIA}
+              </Typography>
+            </section>
+          )}
+
+          <TableFooter>
+            {isLoading && (
+              <TableRow>
+                <TableCell colSpan={3}>
+                  <LinearProgress variant="indeterminate" />
+                </TableCell>
+              </TableRow>
+            )}
+          </TableFooter>
+
         </Table>
       </TableContainer>
 
