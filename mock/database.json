@@ -7,6 +7,24 @@
       "nomeCompleto": "Davi Alves"
     },
     {
+      "id": 2,
+      "email": "henrique@gmail.com",
+      "cidadeId": 1,
+      "nomeCompleto": "Henrique Matheus"
+    },
+    {
+      "id": 3,
+      "email": "maria@gmail.com",
+      "cidadeId": 1,
+      "nomeCompleto": "Maria Silva"
+    },
+    {
+      "id": 4,
+      "email": "jose@gmail.com",
+      "cidadeId": 1,
+      "nomeCompleto": "José Souza"
+    },
+    {
       "id": 6,
       "email": "marcos@gmail.com",
       "cidadeId": 1,
@@ -23,6 +41,12 @@
       "email": "Eric@gmail.com",
       "cidadeId": 1,
       "nomeCompleto": "Eric Domingos"
+    },
+    {
+      "id": 9,
+      "email": "beatriz@gmail.com",
+      "cidadeId": 1,
+      "nomeCompleto": "Beatriz Lima"
     },
     {
       "id": 10,

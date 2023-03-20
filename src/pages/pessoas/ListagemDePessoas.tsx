@@ -64,8 +64,7 @@ export const ListagemDePessoas: React.FC = () => {
   }, [busca, debounce, pagina])
 
   const handleDelete = (id: number) => {
-    // eslint-disable-next-line no-restricted-globals
-    if (confirm('Realmente deseja apagar?')) {
+    if (window.confirm('Realmente deseja apagar?')) {
       PessoasService.deleteById(id)
         .then(result => {
           if (result instanceof Error) {
@@ -85,6 +84,7 @@ export const ListagemDePessoas: React.FC = () => {
         mostrarInputBusca
         textoBotaoNovo="Nova"
         textoDaBusca={busca}
+        aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
         aoMudarTextoDeBusca={texto => setSearchParams({ busca: texto, pagina: '1' }, { replace: true })}
       />}>
 
