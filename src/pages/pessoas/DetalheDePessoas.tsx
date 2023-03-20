@@ -1,23 +1,58 @@
+import { useEffect, useState } from 'react'
 import { useNavigate, useParams } from "react-router-dom"
 import { FerramentasDeDetalhe } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
+import { LinearProgress } from "@mui/material"
+
+import { PessoasService } from '../../shared/services/api/pessoas/PessoasService'
 
 
 export const DetalheDePessoas: React.FC = () => {
   const { id = 'nova' } = useParams<'id'>()
   const navigate = useNavigate()
 
+  const [isLoading, setIsLoading] = useState(false)
+  const [nome, setNome] = useState('false')
+
+  useEffect(() => {
+    setIsLoading(true)
+
+    if (id !== 'nova') {
+      PessoasService.getById(Number(id))
+        .then((result) => {
+          setIsLoading(false)
+
+          if (result instanceof Error) {
+            alert(result.message)
+          } else {
+            setNome(result.nomeCompleto)
+            console.log(result)
+          }
+        })
+    }
+  }, [id])
+
   const handleSave = () => {
     console.log('Save')
   }
 
-  const handleDelete = () => {
-    console.log('Delete')
+  const handleDelete = (id: number) => {
+    if (window.confirm('Realmente deseja apagar?')) {
+      PessoasService.deleteById(id)
+        .then(result => {
+          if (result instanceof Error) {
+            alert(result.message)
+          } else {
+            alert('Registro apagado com sucesso')
+            navigate('/pessoas')
+          }
+        })
+    }
   }
 
   return (
     <LayoutBaseDePagina
-      titulo="Detalhe de pessoa"
+      titulo={id === 'nova' ? 'Nova pessoa' : nome}
       barraDeFerramentas={
         <FerramentasDeDetalhe
           textoBotaoNovo="nova"
@@ -26,12 +61,16 @@ export const DetalheDePessoas: React.FC = () => {
           mostrarBotaoApagar={id !== 'nova'}
 
           aoClicarEmSalvarEFechar={handleSave}
-          aoClicarEmApagar={handleSave}
-          aoClicarEmSalvar={handleDelete}
+          aoClicarEmSalvar={handleSave}
+          aoClicarEmApagar={() => handleDelete(Number(id))}
           aoClicarEmVoltar={() => navigate('/pessoas')}
           aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
         />}
     >
+      {isLoading && (
+        <LinearProgress variant='indeterminate' />
+      )}
+
       <p>Detalhe de pessoa</p>
     </LayoutBaseDePagina>
   )
