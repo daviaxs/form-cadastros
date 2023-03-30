@@ -1,13 +1,11 @@
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useState } from 'react'
+import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 import { useNavigate, useParams } from "react-router-dom"
-import { FormHandles } from '@unform/core'
-import { Form } from '@unform/web'
 
 import { PessoasService } from '../../shared/services/api/pessoas/PessoasService'
+import { VTextField, VForm, useVForm } from '../../shared/forms'
 import { FerramentasDeDetalhe } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
-import { VTextField } from '../../shared/forms'
-import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
 
 
 interface IFormData {
@@ -17,18 +15,17 @@ interface IFormData {
 }
 
 export const DetalheDePessoas: React.FC = () => {
+  const { formRef, save, saveAndClose, IsSaveAndClose } = useVForm()
   const { id = 'nova' } = useParams<'id'>()
   const navigate = useNavigate()
 
-  const formRef = useRef<FormHandles>(null)
 
   const [isLoading, setIsLoading] = useState(false)
   const [nome, setNome] = useState('Carregando')
 
   useEffect(() => {
-    setIsLoading(true)
-
     if (id !== 'nova') {
+      setIsLoading(true)
       PessoasService.getById(Number(id))
         .then((result) => {
           setIsLoading(false)
@@ -40,6 +37,12 @@ export const DetalheDePessoas: React.FC = () => {
             formRef.current?.setData(result)
           }
         })
+    } else {
+      formRef.current?.setData({
+        nomeCompleto: '',
+        cidadeId: '',
+        email: '',
+      })
     }
   }, [id])
 
@@ -55,7 +58,11 @@ export const DetalheDePessoas: React.FC = () => {
           if (result instanceof Error) {
             alert(result.message)
           } else {
-            navigate(`/pessoas/detalhe/${result}`)
+            if (IsSaveAndClose()) {
+              navigate(`/pessoas`)
+            } else {
+              navigate(`/pessoas/detalhe/${result}`)
+            }
           }
         })
 
@@ -67,6 +74,10 @@ export const DetalheDePessoas: React.FC = () => {
 
           if (result instanceof Error) {
             alert(result.message)
+          } else {
+            if (IsSaveAndClose()) {
+              navigate(`/pessoas`)
+            }
           }
         })
     }
@@ -96,23 +107,23 @@ export const DetalheDePessoas: React.FC = () => {
           mostrarBotaoNovo={id !== 'nova'}
           mostrarBotaoApagar={id !== 'nova'}
 
-          aoClicarEmSalvar={() => formRef.current?.submitForm()}
-          aoClicarEmSalvarEFechar={() => formRef.current?.submitForm()}
+          aoClicarEmSalvar={save}
+          aoClicarEmSalvarEFechar={saveAndClose}
           aoClicarEmApagar={() => handleDelete(Number(id))}
           aoClicarEmVoltar={() => navigate('/pessoas')}
           aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
         />}
     >
 
-      <Form ref={formRef} onSubmit={handleSave} >
+      <VForm ref={formRef} onSubmit={handleSave} >
         <Box margin={1} display='flex' flexDirection='column' component={Paper} variant='outlined'>
 
           <Grid container direction='column' padding={2} spacing={2}>
 
             {isLoading && (
               <Grid item>
-              <LinearProgress variant='indeterminate'/>
-            </Grid>
+                <LinearProgress variant='indeterminate' />
+              </Grid>
             )}
 
             <Grid item>
@@ -121,9 +132,9 @@ export const DetalheDePessoas: React.FC = () => {
 
             <Grid container item direction='row' spacing={2}>
               <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField 
+                <VTextField
                   fullWidth
-                  label='Nome completo' 
+                  label='Nome completo'
                   name='nomeCompleto'
                   disabled={isLoading}
                   onChange={e => setNome(e.target.value)} />
@@ -132,9 +143,9 @@ export const DetalheDePessoas: React.FC = () => {
 
             <Grid container item direction='row' spacing={2}>
               <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField 
+                <VTextField
                   fullWidth
-                  label='Email' 
+                  label='Email'
                   name='email'
                   disabled={isLoading} />
               </Grid>
@@ -142,9 +153,9 @@ export const DetalheDePessoas: React.FC = () => {
 
             <Grid container item direction='row' spacing={2}>
               <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField 
+                <VTextField
                   fullWidth
-                  label='Cidade' 
+                  label='Cidade'
                   name='cidadeId'
                   disabled={isLoading} />
               </Grid>
@@ -153,7 +164,7 @@ export const DetalheDePessoas: React.FC = () => {
           </Grid>
 
         </Box>
-      </Form>
+      </VForm>
 
 
     </LayoutBaseDePagina>
