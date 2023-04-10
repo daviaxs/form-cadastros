@@ -3,8 +3,8 @@ import { createContext, useCallback, useContext, useState } from "react";
 
 interface IDrawerContextData {
   isDrawerOpen: boolean;
-  drawerOptions: IdrawerOptions[];
   toggleDrawerOpen: () => void;
+  drawerOptions: IdrawerOptions[];
   setDrawerOptions: (newDrawerOptions: IdrawerOptions[]) => void;
 }
 
@@ -27,19 +27,19 @@ export const useDrawerContext = () => {
 export const DrawerProvider: React.FC<IThemeProvider> = ({ children }) => {
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false)
-  const [drawerOptions, setdrawerOptions] = useState<IdrawerOptions[]>([])
+  const [drawerOptions, setDrawerOptions] = useState<IdrawerOptions[]>([])
 
   const toggleDrawerOpen = useCallback(() => {
     setIsDrawerOpen(oldDrawerOpen => !oldDrawerOpen)
   }, [])
 
-  const handlesetdrawerOptions = useCallback((newDrawerOptions: IdrawerOptions[]) => {
-    setdrawerOptions(newDrawerOptions)
+  const handleSetdrawerOptions = useCallback((newDrawerOptions: IdrawerOptions[]) => {
+    setDrawerOptions(newDrawerOptions)
   }, [])
 
 
   return (
-    <DrawerContext.Provider value={{ isDrawerOpen, drawerOptions,toggleDrawerOpen, setDrawerOptions: handlesetdrawerOptions }}>
+    <DrawerContext.Provider value={{ isDrawerOpen, drawerOptions,toggleDrawerOpen, setDrawerOptions: handleSetdrawerOptions }}>
           {children}
     </DrawerContext.Provider>
   )
