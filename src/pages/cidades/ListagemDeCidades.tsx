@@ -24,7 +24,7 @@ import { useDebounce } from "../../shared/hooks"
 
 
 
-export const ListagemDePessoas: React.FC = () => {
+export const ListagemDeCidades: React.FC = () => {
   const [searchParams, setSearchParams] = useSearchParams()
   const { debounce } = useDebounce()
   const navigate = useNavigate()
