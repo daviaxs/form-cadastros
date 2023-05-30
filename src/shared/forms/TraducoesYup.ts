@@ -2,32 +2,32 @@ import { setLocale } from "yup";
 
 setLocale({
   mixed: {
-    required: `Este campo é obrigatório`,
+    required: () => `Este campo é obrigatório`,
     oneOf: ({ values }) => `Deve ser um dos seguintes valores: ${values}`,
     notOneOf: ({ values }) => `Não pode ser um dos seguintes valores: ${values}`,
-    defined: `Este campo precisa ter um valor definido`,
-    notType: `Formato digitado é invalido`
+    defined: () => `Este campo precisa ter um valor definido`,
+    notType: () => `Formato digitado é invalido`
   },
   string: {
     length: ({ length }) => `Deve ter exatamente ${length} caracteres`,
     min: ({ min }) => `Deve ter pelo menos ${min} caracteres`,
     max: ({ max }) => `Deve ter no máximo ${max} caracteres`,
-    email: `Formato de e-mail digitado não é valido`,
-    url: `Deve ter um formato de URL válida`,
-    trim: `Não deve conter espaços no início ou no fim.`,
-    lowercase: `Deve estar em maiúsculo`,
-    uppercase: `Deve estar em minúsculo`,
+    email: () => `Formato de e-mail digitado não é valido`,
+    url: () => `Deve ter um formato de URL válida`,
+    trim: () => `Não deve conter espaços no início ou no fim.`,
+    lowercase: () => `Deve estar em maiúsculo`,
+    uppercase: () => `Deve estar em minúsculo`,
     matches: ({ regex }) => `O valor deve corresponder ao padrão: ${regex}`,
-    uuid: `Valor digitado não confere a um UUID valido`
+    uuid: () => `Valor digitado não confere a um UUID valido`
   },
   number: {
     min: ({ min }) => `Deve ser no mínimo ${min}`,
     max: ({ max }) => `Deve ser no máximo ${max}`,
     lessThan: ({ less }) => `Deve ser menor que ${less}`,
     moreThan: ({ more }) => `Deve ser maior que ${more}`,
-    positive: `Deve ser um número posítivo`,
-    negative: `Deve ser um número negativo`,
-    integer: `Deve ser um número inteiro`
+    positive: () => `Deve ser um número posítivo`,
+    negative: () => `Deve ser um número negativo`,
+    integer: () => `Deve ser um número inteiro`
   },
   date: {
     min: ({ min }) => `Deve ser maior que a data ${min}`,
@@ -39,6 +39,6 @@ setLocale({
     length: ({ length }) => `Deve conter exatamente ${length} itens`
   },
   object: {
-    noUnknown: `Deve ser passado um valor definido`
+    noUnknown: () => `Deve ser passado um valor definido`
   }
 })
