@@ -108,7 +108,6 @@ export const ListagemDeCidades: React.FC = () => {
                     <Icon>edit</Icon>
                   </IconButton>
                 </TableCell>
-                <TableCell>{row.id}</TableCell>
                 <TableCell>{row.nome}</TableCell>
               </TableRow>
             ))}

@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom"
 import { ObjectSchema, object, string, number, ValidationError } from "yup"
 import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material"
 
-import { PessoasService } from "../../shared/services/api/pessoas/PessoasService"
+import { CidadesService } from "../../shared/services/api/cidades/CidadesService"
 import { VTextField, VForm, useVForm } from "../../shared/forms"
 import { FerramentasDeDetalhe } from "../../shared/components"
 import { IVFormErrors } from "../../shared/forms/IVFormErrors"
@@ -36,14 +36,14 @@ export const DetalheDeCidades: React.FC = () => {
   useEffect(() => {
     if (id !== 'nova') {
       setIsLoading(true)
-      PessoasService.getById(Number(id))
+      CidadesService.getById(Number(id))
         .then((result) => {
           setIsLoading(false)
 
           if (result instanceof Error) {
             alert(result.message)
           } else {
-            setNome(result.nomeCompleto)
+            setNome(result.nome)
             formRef.current?.setData(result)
           }
         })
@@ -64,7 +64,7 @@ export const DetalheDeCidades: React.FC = () => {
         setIsLoading(true)
 
         if (id === 'nova') {
-          PessoasService
+          CidadesService
             .create(dadosValidados)
             .then((result) => {
               setIsLoading(false)
@@ -73,15 +73,15 @@ export const DetalheDeCidades: React.FC = () => {
                 alert(result.message)
               } else {
                 if (IsSaveAndClose()) {
-                  navigate(`/pessoas`)
+                  navigate(`/cidades`)
                 } else {
-                  navigate(`/pessoas/detalhe/${result}`)
+                  navigate(`/cidades/detalhe/${result}`)
                 }
               }
             })
 
         } else {
-          PessoasService
+          CidadesService
             .updateById(Number(id), { id: Number(id), ...dadosValidados })
             .then((result) => {
               setIsLoading(false)
@@ -90,7 +90,7 @@ export const DetalheDeCidades: React.FC = () => {
                 alert(result.message)
               } else {
                 if (IsSaveAndClose()) {
-                  navigate(`/pessoas`)
+                  navigate(`/cidades`)
                 }
               }
             })
@@ -113,13 +113,13 @@ export const DetalheDeCidades: React.FC = () => {
 
   const handleDelete = (id: number) => {
     if (window.confirm('Realmente deseja apagar?')) {
-      PessoasService.deleteById(id)
+      CidadesService.deleteById(id)
         .then(result => {
           if (result instanceof Error) {
             alert(result.message)
           } else {
             alert('Registro apagado com sucesso')
-            navigate('/pessoas')
+            navigate('/cidades')
           }
         })
     }
@@ -127,7 +127,7 @@ export const DetalheDeCidades: React.FC = () => {
 
   return (
     <LayoutBaseDePagina
-      titulo={id === 'nova' ? 'Nova pessoa' : nome}
+      titulo={id === 'nova' ? 'Nova cidade' : nome}
       barraDeFerramentas={
         <FerramentasDeDetalhe
           textoBotaoNovo="nova"
@@ -138,8 +138,8 @@ export const DetalheDeCidades: React.FC = () => {
           aoClicarEmSalvar={save}
           aoClicarEmSalvarEFechar={saveAndClose}
           aoClicarEmApagar={() => handleDelete(Number(id))}
-          aoClicarEmVoltar={() => navigate('/pessoas')}
-          aoClicarEmNovo={() => navigate('/pessoas/detalhe/nova')}
+          aoClicarEmVoltar={() => navigate('/cidades')}
+          aoClicarEmNovo={() => navigate('/cidades/detalhe/nova')}
         />}
     >
 
