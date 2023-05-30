@@ -1,13 +1,13 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { Box, Grid, LinearProgress, Paper, Typography } from '@mui/material'
-import { ObjectSchema, object, string, number, ValidationError } from 'yup'
+import { ObjectSchema, object, string, number, ValidationError } from "yup"
+import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material"
 
-import { PessoasService } from '../../shared/services/api/pessoas/PessoasService'
-import { VTextField, VForm, useVForm } from '../../shared/forms'
+import { PessoasService } from "../../shared/services/api/pessoas/PessoasService"
+import { VTextField, VForm, useVForm } from "../../shared/forms"
 import { FerramentasDeDetalhe } from "../../shared/components"
+import { IVFormErrors } from "../../shared/forms/IVFormErrors"
 import { LayoutBaseDePagina } from "../../shared/layouts"
-import { IVFormErrors } from '../../shared/forms/IVFormErrors'
 
 
 
@@ -19,7 +19,7 @@ interface IFormData {
 
 const formValidationSchema: ObjectSchema<IFormData> = object({
   nomeCompleto: string().defined().min(3),
-  email: string().defined().email(),
+  email: string().email().defined(),
   cidadeId: number().defined(),
 })
 
