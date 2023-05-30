@@ -3,16 +3,12 @@ import { Api } from "../axios-config"
 
 export interface IListagemCidade {
   id: number,
-  email: string,
-  cidadeId: number,
-  nomeCompleto: string
+  nome: string,
 }
 
 export interface IDetalheCidade {
   id: number,
-  email: string,
-  cidadeId: number,
-  nomeCompleto: string
+  nome: string,
 }
 
 type TCidadesComTotalCount = {
