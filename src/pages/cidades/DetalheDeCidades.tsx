@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useNavigate, useParams } from "react-router-dom"
-import { ObjectSchema, object, string, number, ValidationError } from "yup"
+import { ObjectSchema, object, string, ValidationError } from "yup"
 import { Box, Grid, LinearProgress, Paper, Typography } from "@mui/material"
 
 import { CidadesService } from "../../shared/services/api/cidades/CidadesService"
@@ -12,15 +12,11 @@ import { LayoutBaseDePagina } from "../../shared/layouts"
 
 
 interface IFormData {
-  email: string;
-  cidadeId: number;
-  nomeCompleto: string;
+  nome: string;
 }
 
 const formValidationSchema: ObjectSchema<IFormData> = object({
-  nomeCompleto: string().defined().min(3),
-  email: string().email().defined(),
-  cidadeId: number().defined(),
+  nome: string().defined().min(3),
 })
 
 
@@ -49,9 +45,7 @@ export const DetalheDeCidades: React.FC = () => {
         })
     } else {
       formRef.current?.setData({
-        nomeCompleto: '',
-        cidadeId: '',
-        email: '',
+        nome: '',
       })
     }
   }, [id, formRef])
@@ -162,30 +156,10 @@ export const DetalheDeCidades: React.FC = () => {
               <Grid item xs={12} md={6} lg={4} xl={2}>
                 <VTextField
                   fullWidth
-                  label='Nome completo'
-                  name='nomeCompleto'
+                  label='Nome'
+                  name='nome'
                   disabled={isLoading}
                   onChange={e => setNome(e.target.value)} />
-              </Grid>
-            </Grid>
-
-            <Grid container item direction='row' spacing={2}>
-              <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField
-                  fullWidth
-                  label='Email'
-                  name='email'
-                  disabled={isLoading} />
-              </Grid>
-            </Grid>
-
-            <Grid container item direction='row' spacing={2}>
-              <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField
-                  fullWidth
-                  label='Cidade'
-                  name='cidadeId'
-                  disabled={isLoading} />
               </Grid>
             </Grid>
 
