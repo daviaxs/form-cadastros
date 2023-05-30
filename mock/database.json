@@ -60,5 +60,11 @@
       "cidadeId": 1,
       "nomeCompleto": "Guilherme Dias"
     }
+  ],
+  "cidades": [
+    {
+      "id": 1,
+      "nome": "São Paulo"
+    }
   ]
 }

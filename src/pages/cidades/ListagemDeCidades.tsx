@@ -92,8 +92,7 @@ export const ListagemDeCidades: React.FC = () => {
           <TableHead>
             <TableRow>
               <TableCell>Ações</TableCell>
-              <TableCell>Nome completo</TableCell>
-              <TableCell>Email</TableCell>
+              <TableCell>Nome da cidade</TableCell>
             </TableRow>
           </TableHead>
 

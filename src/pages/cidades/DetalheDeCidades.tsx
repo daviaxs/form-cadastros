@@ -9,8 +9,6 @@ import { FerramentasDeDetalhe } from "../../shared/components"
 import { IVFormErrors } from "../../shared/forms/IVFormErrors"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 
-
-
 interface IFormData {
   nome: string;
 }
@@ -18,7 +16,6 @@ interface IFormData {
 const formValidationSchema: ObjectSchema<IFormData> = object({
   nome: string().defined().min(3),
 })
-
 
 export const DetalheDeCidades: React.FC = () => {
   const { formRef, save, saveAndClose, IsSaveAndClose } = useVForm()
