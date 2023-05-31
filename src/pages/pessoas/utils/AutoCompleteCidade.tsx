@@ -55,6 +55,7 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
       noOptionsText="Sem opções"
       loadingText="Carregando..."
 
+      disablePortal
       options={options}
       loading={isLoading}
       disabled={isExternalLoading}
