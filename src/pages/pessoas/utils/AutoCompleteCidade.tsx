@@ -7,6 +7,7 @@ export const AutoCompleteCidade: React.FC = () => {
       renderInput={(params) => (
         <TextField
           {...params}
+          label="Cidade"
         />
       )}
     />
