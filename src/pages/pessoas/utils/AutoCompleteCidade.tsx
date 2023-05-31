@@ -9,7 +9,11 @@ type TAutoCompleteOption = {
   label: string
 }
 
-export const AutoCompleteCidade: React.FC = () => {
+interface IAutoCompleteCidadeProps {
+  isExternalLoading?: boolean
+}
+
+export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExternalLoading = false }) => {
   const { debounce } = useDebounce()
 
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined)
@@ -48,8 +52,9 @@ export const AutoCompleteCidade: React.FC = () => {
     <Autocomplete
       options={options}
       loading={isLoading}
+      disabled={isExternalLoading}
       value={autoCompleteSelectedOption}
-      popupIcon={isLoading ? <CircularProgress size={22} /> : undefined}
+      popupIcon={(isExternalLoading || isLoading) ? <CircularProgress size={22} /> : undefined}
 
       onInputChange={(_, newValue) => setBusca(newValue)}
       onChange={(_, newValue) => {
