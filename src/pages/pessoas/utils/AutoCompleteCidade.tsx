@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useMemo, useState } from "react"
 import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 
 import { CidadesService } from "../../../shared/services/api/cidades/CidadesService"
@@ -36,10 +36,19 @@ export const AutoCompleteCidade: React.FC = () => {
     })
   }, [debounce, busca])
 
+  const autoCompleteSelectedOption = useMemo(() => {
+    if (!selectedId === undefined) return undefined
+
+    const selectedOption = options.find(option => option.id === selectedId)
+
+    return selectedOption
+  }, [options, selectedId])
+
   return (
     <Autocomplete
       options={options}
       loading={isLoading}
+      value={autoCompleteSelectedOption}
       popupIcon={isLoading ? <CircularProgress size={22} /> : undefined}
 
       onInputChange={(_, newValue) => setBusca(newValue)}
