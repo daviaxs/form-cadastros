@@ -1,7 +1,8 @@
-import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
-import { useDebounce } from "../../../shared/hooks"
+import { Autocomplete, CircularProgress, TextField } from "@mui/material"
+
 import { CidadesService } from "../../../shared/services/api/cidades/CidadesService"
+import { useDebounce } from "../../../shared/hooks"
 
 type TAutoCompleteOption = {
   id: number
@@ -10,6 +11,8 @@ type TAutoCompleteOption = {
 
 export const AutoCompleteCidade: React.FC = () => {
   const { debounce } = useDebounce()
+
+  const [selectedId, setSelectedId] = useState<number | undefined>(undefined)
   const [options, setOptions] = useState<TAutoCompleteOption[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [busca, setBusca] = useState('')
@@ -35,10 +38,16 @@ export const AutoCompleteCidade: React.FC = () => {
 
   return (
     <Autocomplete
+      options={options}
       loading={isLoading}
       popupIcon={isLoading ? <CircularProgress size={22} /> : undefined}
+
       onInputChange={(_, newValue) => setBusca(newValue)}
-      options={options}
+      onChange={(_, newValue) => {
+        setSelectedId(newValue?.id)
+        setBusca('')
+      }}
+
       renderInput={(params) => (
         <TextField
           {...params}
