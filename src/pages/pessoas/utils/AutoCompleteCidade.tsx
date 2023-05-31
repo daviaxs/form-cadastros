@@ -1,4 +1,4 @@
-import { Autocomplete, TextField } from "@mui/material"
+import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 import { useEffect, useState } from "react"
 import { useDebounce } from "../../../shared/hooks"
 import { CidadesService } from "../../../shared/services/api/cidades/CidadesService"
@@ -35,6 +35,8 @@ export const AutoCompleteCidade: React.FC = () => {
 
   return (
     <Autocomplete
+      loading={isLoading}
+      popupIcon={isLoading ? <CircularProgress size={22} /> : undefined}
       onInputChange={(_, newValue) => setBusca(newValue)}
       options={options}
       renderInput={(params) => (
