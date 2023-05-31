@@ -65,6 +65,50 @@
     {
       "id": 1,
       "nome": "São Paulo"
+    },
+    {
+      "nome": "Rio de Janeiro",
+      "id": 2
+    },
+    {
+      "nome": "Salvador",
+      "id": 3
+    },
+    {
+      "nome": "Brasília",
+      "id": 4
+    },
+    {
+      "nome": "Fortaleza",
+      "id": 5
+    },
+    {
+      "nome": "Belo Horizonte\t",
+      "id": 6
+    },
+    {
+      "nome": "Manaus",
+      "id": 7
+    },
+    {
+      "nome": "Curitiba",
+      "id": 8
+    },
+    {
+      "nome": "Recife",
+      "id": 9
+    },
+    {
+      "nome": "Porto Alegre\t",
+      "id": 10
+    },
+    {
+      "nome": "Belém\t",
+      "id": 11
+    },
+    {
+      "nome": "Goiânia",
+      "id": 12
     }
   ]
 }

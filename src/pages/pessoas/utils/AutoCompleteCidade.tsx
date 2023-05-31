@@ -12,13 +12,14 @@ export const AutoCompleteCidade: React.FC = () => {
   const { debounce } = useDebounce()
   const [options, setOptions] = useState<TAutoCompleteOption[]>([])
   const [isLoading, setIsLoading] = useState(false)
+  const [busca, setBusca] = useState('')
 
   useEffect(() => {
 
     setIsLoading(true)
 
     debounce(() => {
-      CidadesService.getAll(1/*, busca*/)
+      CidadesService.getAll(1, busca)
         .then((result) => {
           setIsLoading(false)
 
@@ -30,10 +31,11 @@ export const AutoCompleteCidade: React.FC = () => {
 
         })
     })
-  }, [debounce])
+  }, [debounce, busca])
 
   return (
     <Autocomplete
+      onInputChange={(_, newValue) => setBusca(newValue)}
       options={options}
       renderInput={(params) => (
         <TextField
