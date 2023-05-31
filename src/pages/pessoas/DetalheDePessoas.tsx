@@ -8,6 +8,7 @@ import { VTextField, VForm, useVForm } from "../../shared/forms"
 import { FerramentasDeDetalhe } from "../../shared/components"
 import { IVFormErrors } from "../../shared/forms/IVFormErrors"
 import { LayoutBaseDePagina } from "../../shared/layouts"
+import { AutoCompleteCidade } from "./utils/AutoCompleteCidade"
 
 
 
@@ -181,11 +182,7 @@ export const DetalheDePessoas: React.FC = () => {
 
             <Grid container item direction='row' spacing={2}>
               <Grid item xs={12} md={6} lg={4} xl={2}>
-                <VTextField
-                  fullWidth
-                  label='Cidade'
-                  name='cidadeId'
-                  disabled={isLoading} />
+                <AutoCompleteCidade />
               </Grid>
             </Grid>
 
