@@ -78,12 +78,15 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
       onChange={(_, newValue) => {
         setSelectedId(newValue?.id)
         setBusca('')
+        clearError()
       }}
 
       renderInput={(params) => (
         <TextField
           {...params}
           label="Cidade"
+          error={!!error}
+          helperText={error}
         />
       )}
     />
