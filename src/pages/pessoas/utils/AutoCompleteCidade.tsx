@@ -3,6 +3,7 @@ import { Autocomplete, CircularProgress, TextField } from "@mui/material"
 
 import { CidadesService } from "../../../shared/services/api/cidades/CidadesService"
 import { useDebounce } from "../../../shared/hooks"
+import { useField } from "@unform/core"
 
 type TAutoCompleteOption = {
   id: number
@@ -14,12 +15,22 @@ interface IAutoCompleteCidadeProps {
 }
 
 export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExternalLoading = false }) => {
+  const { fieldName, registerField, defaultValue, error, clearError } = useField('cidadeId')
+
   const { debounce } = useDebounce()
 
   const [selectedId, setSelectedId] = useState<number | undefined>(undefined)
   const [options, setOptions] = useState<TAutoCompleteOption[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [busca, setBusca] = useState('')
+
+  useEffect(() => {
+    registerField({
+      name: fieldName,
+      getValue: () => selectedId,
+      setValue: (_, newSelectedId) => setSelectedId(newSelectedId),
+    })
+  }, [selectedId, fieldName, registerField])
 
   useEffect(() => {
 
@@ -41,9 +52,10 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
   }, [debounce, busca])
 
   const autoCompleteSelectedOption = useMemo(() => {
-    if (!selectedId === undefined) return undefined
+    if (!selectedId === undefined) return null
 
     const selectedOption = options.find(option => option.id === selectedId)
+    if (!selectedOption) return null
 
     return selectedOption
   }, [options, selectedId])
