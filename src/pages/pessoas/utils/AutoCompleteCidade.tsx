@@ -1,5 +1,14 @@
+import { Autocomplete, TextField } from "@mui/material"
+
 export const AutoCompleteCidade: React.FC = () => {
   return (
-    <div>Auto complete cidade</div>
+    <Autocomplete
+      options={[]}
+      renderInput={(params) => (
+        <TextField
+          {...params}
+        />
+      )}
+    />
   )
 }
