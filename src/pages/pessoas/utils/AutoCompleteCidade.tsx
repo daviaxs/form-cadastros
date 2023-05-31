@@ -34,7 +34,7 @@ export const AutoCompleteCidade: React.FC = () => {
 
   return (
     <Autocomplete
-      options={[options]}
+      options={options}
       renderInput={(params) => (
         <TextField
           {...params}
