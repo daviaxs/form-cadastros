@@ -19,7 +19,7 @@ export const AutoCompleteCidade: React.FC<IAutoCompleteCidadeProps> = ({ isExter
 
   const { debounce } = useDebounce()
 
-  const [selectedId, setSelectedId] = useState<number | undefined>(undefined)
+  const [selectedId, setSelectedId] = useState<number | undefined>(defaultValue)
   const [options, setOptions] = useState<TAutoCompleteOption[]>([])
   const [isLoading, setIsLoading] = useState(false)
   const [busca, setBusca] = useState('')
