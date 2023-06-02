@@ -1,4 +1,4 @@
-import { Box, Grid, Card } from "@mui/material"
+import { Box, Grid, Card, CardContent } from "@mui/material"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 
@@ -16,13 +16,17 @@ export const Dashboard = () => {
 
             <Grid item xs={12} md={6} lg={4} xl={2}>
               <Card>
-                Test
+                <CardContent>
+                  Test
+                </CardContent>
               </Card>
             </Grid>
 
             <Grid item xs={12} md={6} lg={4} xl={2}>
               <Card>
-                Test
+                <CardContent>
+                  Test
+                </CardContent>
               </Card>
             </Grid>
 
