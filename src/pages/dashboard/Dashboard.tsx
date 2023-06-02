@@ -4,10 +4,14 @@ import { Box, Grid, Card, CardContent, Typography } from "@mui/material"
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
 import { CidadesService } from "../../shared/services/api/cidades/CidadesService"
+import { PessoasService } from "../../shared/services/api/pessoas/PessoasService"
 
 export const Dashboard = () => {
   const [isLoadingCidades, setIsLoadingCidades] = useState(true)
+  const [isLoadingPessoas, setIsLoadingPessoas] = useState(true)
+
   const [totalCountCidades, setTotalCountCidades] = useState(0)
+  const [totalCountPessoas, setTotalCountPessoas] = useState(0)
 
   useEffect(() => {
     setIsLoadingCidades(true)
@@ -20,6 +24,22 @@ export const Dashboard = () => {
           alert(result.message)
         } else {
           setTotalCountCidades(result.totalCount)
+        }
+
+      })
+  }, [])
+
+  useEffect(() => {
+    setIsLoadingPessoas(true)
+
+    PessoasService.getAll(1)
+      .then((result) => {
+        setIsLoadingPessoas(false)
+
+        if (result instanceof Error) {
+          alert(result.message)
+        } else {
+          setTotalCountPessoas(result.totalCount)
         }
 
       })
@@ -45,7 +65,7 @@ export const Dashboard = () => {
 
                   <Box padding={6}>
                     <Typography variant="h1" align="center">
-                      25
+                      {totalCountPessoas}
                     </Typography>
                   </Box>
                 </CardContent>
