@@ -1,8 +1,30 @@
+import { useEffect, useState } from "react"
 import { Box, Grid, Card, CardContent, Typography } from "@mui/material"
+
 import { FerramentasDaListagem } from "../../shared/components"
 import { LayoutBaseDePagina } from "../../shared/layouts"
+import { CidadesService } from "../../shared/services/api/cidades/CidadesService"
 
 export const Dashboard = () => {
+  const [isLoadingCidades, setIsLoadingCidades] = useState(true)
+  const [totalCountCidades, setTotalCountCidades] = useState(0)
+
+  useEffect(() => {
+    setIsLoadingCidades(true)
+
+    CidadesService.getAll(1)
+      .then((result) => {
+        setIsLoadingCidades(false)
+
+        if (result instanceof Error) {
+          alert(result.message)
+        } else {
+          setTotalCountCidades(result.totalCount)
+        }
+
+      })
+  }, [])
+
   return (
     <LayoutBaseDePagina
       titulo="Página inicial"
@@ -39,7 +61,7 @@ export const Dashboard = () => {
 
                   <Box padding={6}>
                     <Typography variant="h1" align="center">
-                      19
+                      {totalCountCidades}
                     </Typography>
                   </Box>
                 </CardContent>
