@@ -15,6 +15,7 @@ export const Dashboard = () => {
 
   useEffect(() => {
     setIsLoadingCidades(true)
+    setIsLoadingPessoas(true)
 
     CidadesService.getAll(1)
       .then((result) => {
@@ -27,10 +28,6 @@ export const Dashboard = () => {
         }
 
       })
-  }, [])
-
-  useEffect(() => {
-    setIsLoadingPessoas(true)
 
     PessoasService.getAll(1)
       .then((result) => {
