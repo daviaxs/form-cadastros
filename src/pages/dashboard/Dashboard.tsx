@@ -64,9 +64,15 @@ export const Dashboard = () => {
                   </Typography>
 
                   <Box padding={6}>
-                    <Typography variant="h1" align="center">
-                      {totalCountPessoas}
-                    </Typography>
+                    {!isLoadingPessoas ? (
+                      <Typography variant="h1" align="center">
+                        {totalCountPessoas}
+                      </Typography>
+                    ) : (
+                      <Typography variant="h6" align="center">
+                        Carregando...
+                      </Typography>
+                    )}
                   </Box>
                 </CardContent>
               </Card>
@@ -80,9 +86,15 @@ export const Dashboard = () => {
                   </Typography>
 
                   <Box padding={6}>
-                    <Typography variant="h1" align="center">
-                      {totalCountCidades}
-                    </Typography>
+                    {!isLoadingCidades ? (
+                      <Typography variant="h1" align="center">
+                        {totalCountCidades}
+                      </Typography>
+                    ) :
+                      <Typography variant="h6" align="center">
+                        Carregando...
+                      </Typography>
+                    }
                   </Box>
                 </CardContent>
               </Card>
